@@ -62,7 +62,7 @@ export const FAQS: FAQItem[] = [
     divisionId: 'maids',
     divisionName: 'Mighty Maids',
     question: 'Are cleaning detergents and supplies provided?',
-    answer: 'Supplies for home: Detergents are supplied only when requested and quoted accordingly (+R65 per dispatch). If you do not request detergents, our cleaners utilize your preferred household supplies and equipment.',
+    answer: 'Supplies for home: Detergents are supplied only when requested and quoted accordingly (+R180 per dispatch). Optional specialized add-ons include Ironing clothing & bed linen (+R185), Window cleaning (+R120), and Oven cleaning (+R100). If you do not request detergents, our cleaners utilize your preferred household supplies and equipment.',
     popular: true,
   },
   {

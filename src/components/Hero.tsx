@@ -8,7 +8,6 @@ interface HeroProps {
   onSelectDivision: (id: string) => void;
   onOpenBooking: (divisionId?: string) => void;
   onNavigateToMaidHourly?: () => void;
-  onNavigateToGardenerHourly?: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({
@@ -16,13 +15,12 @@ export const Hero: React.FC<HeroProps> = ({
   onSelectDivision,
   onOpenBooking,
   onNavigateToMaidHourly,
-  onNavigateToGardenerHourly,
 }) => {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50/50 pt-8 pb-16 border-b border-slate-200">
+    <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50/50 pt-4 pb-6 border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Quick Division Selector Strip */}
-        <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
+        <div className="mb-3 flex flex-wrap items-center justify-center gap-2">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-400 mr-2">
             The Mighty Family:
           </span>
@@ -58,9 +56,9 @@ export const Hero: React.FC<HeroProps> = ({
         </div>
 
         {/* 2-Column Balanced Hero */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
           {/* Left Column: Value Proposition & CTAs */}
-          <div className="lg:col-span-6 space-y-6">
+          <div className="lg:col-span-6 space-y-4">
             <div className="flex items-center gap-2 text-xs font-semibold text-slate-600">
               <span className="text-amber-600 font-bold tracking-wider uppercase">Cape Town & South Africa</span>
               <span aria-hidden="true">·</span>
@@ -95,29 +93,17 @@ export const Hero: React.FC<HeroProps> = ({
             </div>
 
             {/* Hourly Booking Fast Links */}
-            {(onNavigateToMaidHourly || onNavigateToGardenerHourly) && (
+            {onNavigateToMaidHourly && (
               <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
-                <span className="text-slate-500 font-semibold">Hourly Work (R100/hr · Min 3 hrs):</span>
-                {onNavigateToMaidHourly && (
-                  <button
-                    type="button"
-                    onClick={onNavigateToMaidHourly}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-pink-50 hover:bg-pink-100 text-pink-700 font-bold border border-pink-200 transition-all cursor-pointer shadow-2xs"
-                  >
-                    <span>Book Maid Hourly (R100/hr)</span>
-                    <ArrowRight className="w-3 h-3" />
-                  </button>
-                )}
-                {onNavigateToGardenerHourly && (
-                  <button
-                    type="button"
-                    onClick={onNavigateToGardenerHourly}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold border border-emerald-200 transition-all cursor-pointer shadow-2xs"
-                  >
-                    <span>Book Gardener Hourly (R100/hr)</span>
-                    <ArrowRight className="w-3 h-3" />
-                  </button>
-                )}
+                <span className="text-slate-500 font-semibold">Hourly Housekeeping:</span>
+                <button
+                  type="button"
+                  onClick={onNavigateToMaidHourly}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-pink-50 hover:bg-pink-100 text-pink-700 font-bold border border-pink-200 transition-all cursor-pointer shadow-2xs"
+                >
+                  <span>Book Maid Hourly (R100/hr · Min 3 hrs)</span>
+                  <ArrowRight className="w-3 h-3" />
+                </button>
               </div>
             )}
 
@@ -192,7 +178,7 @@ export const Hero: React.FC<HeroProps> = ({
         </div>
 
         {/* Full-width proof strip below hero */}
-        <div className="mt-14 pt-8 border-t border-slate-200 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div className="mt-6 pt-4 border-t border-slate-200 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           <div>
             <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 tabular-nums">
               18,400+

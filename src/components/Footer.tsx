@@ -7,7 +7,6 @@ interface FooterProps {
   onSelectDivision: (id: string) => void;
   onOpenBooking: (divisionId?: string) => void;
   onNavigateToMaidHourly?: () => void;
-  onNavigateToGardenerHourly?: () => void;
   onNavigateToAcademy?: () => void;
 }
 
@@ -15,7 +14,6 @@ export const Footer: React.FC<FooterProps> = ({
   onSelectDivision,
   onOpenBooking,
   onNavigateToMaidHourly,
-  onNavigateToGardenerHourly,
   onNavigateToAcademy,
 }) => {
   return (
@@ -106,18 +104,6 @@ export const Footer: React.FC<FooterProps> = ({
                   >
                     <span>Hourly Maid Booking</span>
                     <span className="text-[9px] bg-pink-900/60 text-pink-300 font-bold px-1 rounded">R100/hr</span>
-                  </button>
-                </li>
-              )}
-              {onNavigateToGardenerHourly && (
-                <li>
-                  <button
-                    type="button"
-                    onClick={onNavigateToGardenerHourly}
-                    className="hover:text-emerald-400 transition-colors text-left flex items-center gap-1.5 cursor-pointer"
-                  >
-                    <span>Hourly Gardener Booking</span>
-                    <span className="text-[9px] bg-emerald-900/60 text-emerald-300 font-bold px-1 rounded">R100/hr</span>
                   </button>
                 </li>
               )}

@@ -30,7 +30,6 @@ interface DivisionExplorerProps {
   onSelectDivision: (id: string) => void;
   onOpenBooking: (divisionId: string, initialNotes?: string) => void;
   onNavigateToMaidHourly?: () => void;
-  onNavigateToGardenerHourly?: () => void;
 }
 
 export const DivisionExplorer: React.FC<DivisionExplorerProps> = ({
@@ -38,7 +37,6 @@ export const DivisionExplorer: React.FC<DivisionExplorerProps> = ({
   onSelectDivision,
   onOpenBooking,
   onNavigateToMaidHourly,
-  onNavigateToGardenerHourly,
 }) => {
   const currentDivision = DIVISIONS.find((d) => d.id === selectedDivisionId) || DIVISIONS[0];
 
@@ -49,6 +47,11 @@ export const DivisionExplorer: React.FC<DivisionExplorerProps> = ({
   const [maidFrequency, setMaidFrequency] = useState<MaidFrequency>('once-off');
   const [maidCallOutPlanId, setMaidCallOutPlanId] = useState<string>('standard');
   const [maidDetergentAddon, setMaidDetergentAddon] = useState<boolean>(false);
+  const [maidIroningAddon, setMaidIroningAddon] = useState<boolean>(false);
+  const [maidLaundryAddon, setMaidLaundryAddon] = useState<boolean>(false);
+  const [maidCarpetAddon, setMaidCarpetAddon] = useState<boolean>(false);
+  const [maidWindowAddon, setMaidWindowAddon] = useState<boolean>(false);
+  const [maidOvenAddon, setMaidOvenAddon] = useState<boolean>(false);
 
   const [nannyHours, setNannyHours] = useState(20);
   const [moverRooms, setMoverRooms] = useState(2);
@@ -84,7 +87,13 @@ export const DivisionExplorer: React.FC<DivisionExplorerProps> = ({
 
         const freqData = MAID_FREQUENCY_RATES[maidFrequency];
         const rateInfo = freqData.rates[maidPropertyType];
-        const detergentFee = maidDetergentAddon ? 65 : 0;
+        const detergentFee = maidDetergentAddon ? 180 : 0;
+        const ironingFee = maidIroningAddon ? 185 : 0;
+        const laundryFee = maidLaundryAddon ? 155 : 0;
+        const carpetFee = maidCarpetAddon ? 135 : 0;
+        const windowFee = maidWindowAddon ? 120 : 0;
+        const ovenFee = maidOvenAddon ? 100 : 0;
+        const addOnsTotal = detergentFee + ironingFee + laundryFee + carpetFee + windowFee + ovenFee;
 
         if (rateInfo.price === 'QUOTE') {
           return {
@@ -93,12 +102,20 @@ export const DivisionExplorer: React.FC<DivisionExplorerProps> = ({
           };
         }
 
-        const finalTotal = rateInfo.price + detergentFee;
+        const finalTotal = rateInfo.price + addOnsTotal;
+        const selectedAddonLabels: string[] = [];
+        if (maidDetergentAddon) selectedAddonLabels.push('Detergents (+R180)');
+        if (maidIroningAddon) selectedAddonLabels.push('Ironing (+R185)');
+        if (maidLaundryAddon) selectedAddonLabels.push('Laundry (+R155)');
+        if (maidCarpetAddon) selectedAddonLabels.push('Carpet (+R135)');
+        if (maidWindowAddon) selectedAddonLabels.push('Windows (+R120)');
+        if (maidOvenAddon) selectedAddonLabels.push('Oven (+R100)');
+
+        const addonSuffix = selectedAddonLabels.length > 0 ? ` + ${selectedAddonLabels.join(' + ')}` : '';
+
         return {
           amount: finalTotal,
-          description: `Daily Maintenance (${rateInfo.serviceType}) for ${maidPropertyType} · ${freqData.label}: R${rateInfo.price}${
-            maidDetergentAddon ? ' + R65 Detergents on request' : ' (Client provides detergents)'
-          }`,
+          description: `Daily Maintenance (${rateInfo.serviceType}) for ${maidPropertyType} · ${freqData.label}: R${rateInfo.price}${addonSuffix}`,
         };
       }
       case 'nannies': {
@@ -124,10 +141,10 @@ export const DivisionExplorer: React.FC<DivisionExplorerProps> = ({
           addOns.push('New home unpack & furniture wipe');
         }
 
-        const discount = addOns.length > 0 ? Math.round((baseMoverCost + addOnCost) * 0.15) : 0;
+        const discount = addOns.length > 0 ? Math.round((baseMoverCost + addOnCost) * 0.05) : 0;
         const total = baseMoverCost + addOnCost - discount;
 
-        const addOnText = addOns.length > 0 ? ` + ${addOns.join(' + ')} (15% Bundle Discount applied)` : '';
+        const addOnText = addOns.length > 0 ? ` + ${addOns.join(' + ')} (5% Bundle Discount applied)` : '';
         return {
           amount: total,
           description: `Residential move (${hours}h crew & truck)${addOnText}`,
@@ -179,11 +196,11 @@ export const DivisionExplorer: React.FC<DivisionExplorerProps> = ({
 
         let gardenAddon = handyIncludeGardenRound ? 280 : 0;
         let subtotal = baseHandy + gardenAddon;
-        let discount = handyIncludeGardenRound ? Math.round(subtotal * 0.15) : 0;
+        let discount = handyIncludeGardenRound ? Math.round(subtotal * 0.05) : 0;
         let total = subtotal - discount;
 
         const pairedText = handyIncludeGardenRound
-          ? ' + Combined with Mighty Gardeners round (15% Combo Discount)'
+          ? ' + Combined with Mighty Gardeners round (5% Combo Discount)'
           : '';
         return {
           amount: total,
@@ -217,24 +234,24 @@ export const DivisionExplorer: React.FC<DivisionExplorerProps> = ({
   };
 
   return (
-    <section id="divisions" className="py-20 bg-white border-b border-slate-200">
+    <section id="divisions" className="py-6 sm:py-8 bg-white border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="text-xs font-bold text-amber-600 uppercase tracking-widest mb-2">
+        <div className="text-center max-w-3xl mx-auto mb-4">
+          <div className="text-xs font-bold text-amber-600 uppercase tracking-widest mb-1">
             Multi-Discipline Excellence
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight text-balance">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight text-balance">
             Explore All Six Mighty Divisions
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-slate-600 leading-relaxed">
+          <p className="mt-2 text-sm sm:text-base text-slate-600 leading-relaxed">
             Every division operates with dedicated specialists, industry-grade equipment, 
             and the same unwavering Mighty accountability across Cape Town and South Africa.
           </p>
         </div>
 
         {/* Interactive Division Navigation Bar with active layout animation */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 p-1.5 bg-slate-100 rounded-2xl max-w-5xl mx-auto mb-12 border border-slate-200/80">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 p-1.5 bg-slate-100 rounded-2xl max-w-5xl mx-auto mb-5 border border-slate-200/80">
           {DIVISIONS.map((div) => {
             const isSelected = selectedDivisionId === div.id;
             return (
@@ -555,27 +572,126 @@ export const DivisionExplorer: React.FC<DivisionExplorerProps> = ({
                             </div>
                           </div>
 
-                          {/* Detergent Supply Option */}
-                          <div className="pt-2 border-t border-slate-200">
-                            <label className="flex items-start gap-2.5 p-2.5 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100/70">
-                              <input
-                                type="checkbox"
-                                checked={maidDetergentAddon}
-                                onChange={(e) => setMaidDetergentAddon(e.target.checked)}
-                                className="mt-0.5 rounded text-pink-600 focus:ring-pink-500"
-                              />
-                              <div className="text-xs">
-                                <div className="font-bold text-slate-900 flex items-center justify-between gap-2">
-                                  <span>Request Home Cleaning Detergents (+R65)</span>
-                                  <span className="text-[10px] text-pink-700 font-semibold bg-pink-100 px-2 py-0.5 rounded-full">
-                                    Supplied when requested
-                                  </span>
+                          {/* Specialized Add-ons & Supplies Option */}
+                          <div className="pt-2 border-t border-slate-200 space-y-2">
+                            <div className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                              Optional Specialized Add-ons:
+                            </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                              {/* 1. Detergents */}
+                              <label className="flex items-start gap-2 p-2 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100/70">
+                                <input
+                                  type="checkbox"
+                                  checked={maidDetergentAddon}
+                                  onChange={(e) => setMaidDetergentAddon(e.target.checked)}
+                                  className="mt-0.5 rounded text-pink-600 focus:ring-pink-500"
+                                />
+                                <div className="space-y-0.5">
+                                  <div className="font-bold text-slate-900 flex items-center justify-between gap-1">
+                                    <span>Cleaning Detergents</span>
+                                    <span className="text-[10px] text-pink-700 font-bold bg-pink-100 px-1.5 py-0.2 rounded font-mono">
+                                      +R180
+                                    </span>
+                                  </div>
+                                  <div className="text-[10px] text-slate-500">Eco-friendly supplies for visit</div>
                                 </div>
-                                <p className="text-[11px] text-slate-500 mt-0.5">
-                                  Supplies for home: Detergents are supplied only when requested and quoted accordingly. Leave unchecked if using your own household supplies.
-                                </p>
-                              </div>
-                            </label>
+                              </label>
+
+                              {/* 2. Ironing */}
+                              <label className="flex items-start gap-2 p-2 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100/70">
+                                <input
+                                  type="checkbox"
+                                  checked={maidIroningAddon}
+                                  onChange={(e) => setMaidIroningAddon(e.target.checked)}
+                                  className="mt-0.5 rounded text-pink-600 focus:ring-pink-500"
+                                />
+                                <div className="space-y-0.5">
+                                  <div className="font-bold text-slate-900 flex items-center justify-between gap-1">
+                                    <span>Ironing Clothes & Linen</span>
+                                    <span className="text-[10px] text-pink-700 font-bold bg-pink-100 px-1.5 py-0.2 rounded font-mono">
+                                      +R185
+                                    </span>
+                                  </div>
+                                  <div className="text-[10px] text-slate-500">Steam pressing apparel & linens</div>
+                                </div>
+                              </label>
+
+                              {/* 3. Laundry */}
+                              <label className="flex items-start gap-2 p-2 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100/70">
+                                <input
+                                  type="checkbox"
+                                  checked={maidLaundryAddon}
+                                  onChange={(e) => setMaidLaundryAddon(e.target.checked)}
+                                  className="mt-0.5 rounded text-pink-600 focus:ring-pink-500"
+                                />
+                                <div className="space-y-0.5">
+                                  <div className="font-bold text-slate-900 flex items-center justify-between gap-1">
+                                    <span>Laundry Wash & Fold</span>
+                                    <span className="text-[10px] text-pink-700 font-bold bg-pink-100 px-1.5 py-0.2 rounded font-mono">
+                                      +R155
+                                    </span>
+                                  </div>
+                                  <div className="text-[10px] text-slate-500">Machine cycles, dry & fold</div>
+                                </div>
+                              </label>
+
+                              {/* 4. Carpet */}
+                              <label className="flex items-start gap-2 p-2 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100/70">
+                                <input
+                                  type="checkbox"
+                                  checked={maidCarpetAddon}
+                                  onChange={(e) => setMaidCarpetAddon(e.target.checked)}
+                                  className="mt-0.5 rounded text-pink-600 focus:ring-pink-500"
+                                />
+                                <div className="space-y-0.5">
+                                  <div className="font-bold text-slate-900 flex items-center justify-between gap-1">
+                                    <span>Carpet Cleaning</span>
+                                    <span className="text-[10px] text-pink-700 font-bold bg-pink-100 px-1.5 py-0.2 rounded font-mono">
+                                      +R135
+                                    </span>
+                                  </div>
+                                  <div className="text-[10px] text-slate-500">Spot clean & shampoo extraction</div>
+                                </div>
+                              </label>
+
+                              {/* 5. Window */}
+                              <label className="flex items-start gap-2 p-2 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100/70">
+                                <input
+                                  type="checkbox"
+                                  checked={maidWindowAddon}
+                                  onChange={(e) => setMaidWindowAddon(e.target.checked)}
+                                  className="mt-0.5 rounded text-pink-600 focus:ring-pink-500"
+                                />
+                                <div className="space-y-0.5">
+                                  <div className="font-bold text-slate-900 flex items-center justify-between gap-1">
+                                    <span>Window Cleaning</span>
+                                    <span className="text-[10px] text-pink-700 font-bold bg-pink-100 px-1.5 py-0.2 rounded font-mono">
+                                      +R120
+                                    </span>
+                                  </div>
+                                  <div className="text-[10px] text-slate-500">Streak-free glass & sills</div>
+                                </div>
+                              </label>
+
+                              {/* 6. Oven */}
+                              <label className="flex items-start gap-2 p-2 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100/70">
+                                <input
+                                  type="checkbox"
+                                  checked={maidOvenAddon}
+                                  onChange={(e) => setMaidOvenAddon(e.target.checked)}
+                                  className="mt-0.5 rounded text-pink-600 focus:ring-pink-500"
+                                />
+                                <div className="space-y-0.5">
+                                  <div className="font-bold text-slate-900 flex items-center justify-between gap-1">
+                                    <span>Oven Cleaning</span>
+                                    <span className="text-[10px] text-pink-700 font-bold bg-pink-100 px-1.5 py-0.2 rounded font-mono">
+                                      +R100
+                                    </span>
+                                  </div>
+                                  <div className="text-[10px] text-slate-500">Interior degreasing & racks</div>
+                                </div>
+                              </label>
+                            </div>
                           </div>
                         </div>
                       ) : (
@@ -724,12 +840,12 @@ export const DivisionExplorer: React.FC<DivisionExplorerProps> = ({
                             <div>
                               <span className="font-bold text-emerald-950">Combine with Mighty Gardeners Regular Round</span>
                               <div className="text-[10px] text-emerald-700">
-                                Lawn mowing, trimming, edging & weeding + Handyman repairs in one coordinated visit (Save 15%)
+                                Lawn mowing, trimming, edging & weeding + Handyman repairs in one coordinated visit (Save 5%)
                               </div>
                             </div>
                           </div>
                           <span className="text-xs font-black text-emerald-800 font-mono">
-                            +R238
+                            +R266
                           </span>
                         </label>
                       </div>
@@ -784,7 +900,7 @@ export const DivisionExplorer: React.FC<DivisionExplorerProps> = ({
                         <div className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center justify-between">
                           <span>Pair with Mighty Maids & Cleaners:</span>
                           <span className="text-[10px] text-amber-700 font-bold bg-amber-50 px-1.5 py-0.5 rounded">
-                            Save 15% Bundled
+                            Save 5% Bundled
                           </span>
                         </div>
 
@@ -926,32 +1042,35 @@ export const DivisionExplorer: React.FC<DivisionExplorerProps> = ({
 
                   {currentDivision.id === 'gardeners' && (
                     <div className="space-y-3">
-                      {/* Hourly Gardener Work Quick Link Card */}
-                      {onNavigateToGardenerHourly && (
-                        <div className="p-3.5 bg-gradient-to-r from-emerald-500/10 via-emerald-50 to-white border border-emerald-300 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs shadow-2xs">
-                          <div>
-                            <div className="font-extrabold text-emerald-950 flex items-center gap-1.5 text-sm">
-                              <Clock className="w-4 h-4 text-emerald-600" />
-                              <span>Book a Gardener for Certain Hours Work</span>
-                            </div>
-                            <p className="text-emerald-900 text-[11px] mt-0.5">
-                              Charge per hour: <strong>R100 an hour</strong> (minimum 3 hours). Commercial mowers & tools included.
-                            </p>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={onNavigateToGardenerHourly}
-                            className="px-3.5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl whitespace-nowrap cursor-pointer transition-all shadow-xs text-xs self-stretch sm:self-auto text-center"
-                          >
-                            Go to Hourly Booking Page →
-                          </button>
+                      {/* Workload & Tasks Based Notice */}
+                      <div className="p-3.5 bg-gradient-to-r from-emerald-500/10 via-emerald-50 to-white border border-emerald-300 rounded-2xl space-y-1.5 text-xs shadow-2xs">
+                        <div className="font-extrabold text-emerald-950 flex items-center justify-between">
+                          <span className="flex items-center gap-1.5 text-sm">
+                            <Trees className="w-4 h-4 text-emerald-600" />
+                            <span>Quoted by Workload & Tasks to be Done</span>
+                          </span>
+                          <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full uppercase">
+                            No Hourly Rates
+                          </span>
                         </div>
-                      )}
+                        <p className="text-emerald-900 text-[11px] leading-relaxed">
+                          Every garden is different. We assess the size of your garden, tasks needed (lawn mowing, edging, weeding, pruning, hedge shaping, clean-ups), and frequency.
+                        </p>
+                        <div className="pt-1.5 border-t border-emerald-200/80 flex flex-wrap gap-2 text-[10px] text-emerald-800 font-semibold">
+                          <span>Small: R350–R500</span>
+                          <span>•</span>
+                          <span>Medium: R500–R800</span>
+                          <span>•</span>
+                          <span>Large: R800+</span>
+                          <span>•</span>
+                          <span>Clean-Up: From R1,200</span>
+                        </div>
+                      </div>
 
                       <div>
                         <div className="text-sm font-semibold text-slate-700 mb-1.5 flex justify-between">
-                          <span>Regular Home Round Schedule:</span>
-                          <span className="text-xs text-emerald-700 font-bold">Regular Home Rounds</span>
+                          <span>Maintenance Frequency:</span>
+                          <span className="text-xs text-emerald-700 font-bold">Workload Estimate</span>
                         </div>
                         <div className="grid grid-cols-2 gap-2">
                           <button

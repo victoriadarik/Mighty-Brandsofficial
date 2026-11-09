@@ -29,8 +29,7 @@ export const BundleCalculator: React.FC<BundleCalculatorProps> = ({ onOpenBookin
 
   const getDiscountPercent = (divIds: string[]): number => {
     const count = divIds.length;
-    if (count >= 3) return 20;
-    if (count === 2) return 15;
+    if (count >= 2) return 5;
     return 0;
   };
 
@@ -69,29 +68,29 @@ export const BundleCalculator: React.FC<BundleCalculatorProps> = ({ onOpenBookin
       : POPULAR_BUNDLES.filter((b) => b.category === bundleFilter);
 
   return (
-    <section id="bundle" className="py-20 bg-slate-900 text-white relative overflow-hidden">
+    <section id="bundle" className="py-6 sm:py-8 bg-slate-900 text-white relative overflow-hidden">
       {/* Background soft ambient accents */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 uppercase tracking-widest mb-3">
+        <div className="text-center max-w-3xl mx-auto mb-4">
+          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 uppercase tracking-widest mb-1.5">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Mighty Multi-Division Synergy</span>
+            <span>Mighty Multi-Division Synergy · All Bundles Save 5%</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white text-balance">
-            Bundle Your Services & Pay Easily via PayFast EFT
+          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white text-balance">
+            Bundle Your Services & Pay Easily via PayFast EFT (5% Off)
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-slate-300 leading-relaxed">
+          <p className="mt-2 text-sm sm:text-base text-slate-300 leading-relaxed">
             Maids, Nannies, and Movers bundle together for seamless home & life transitions, 
             while Gardeners, Handyman (with own tools), and Plumbing bundle up for complete property maintenance rounds. 
-            All settled via secure South African Instant EFT online through PayFast.
+            All bundles save 5% and are settled via secure South African Instant EFT online through PayFast.
           </p>
         </div>
 
         {/* Bundle Family Filter Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 p-1.5 bg-slate-800/80 rounded-2xl max-w-2xl mx-auto mb-10 border border-slate-700">
+        <div className="flex flex-wrap items-center justify-center gap-2 p-1.5 bg-slate-800/80 rounded-2xl max-w-2xl mx-auto mb-5 border border-slate-700">
           <button
             onClick={() => setBundleFilter('all')}
             className={`px-4 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap ${
@@ -264,7 +263,7 @@ export const BundleCalculator: React.FC<BundleCalculatorProps> = ({ onOpenBookin
                   </span>
                 ) : (
                   <span className="text-slate-400">
-                    Add a second division to unlock 15% bundle savings.
+                    Add a second division to unlock 5% bundle savings.
                   </span>
                 )}
               </div>

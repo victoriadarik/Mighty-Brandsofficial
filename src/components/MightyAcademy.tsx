@@ -30,18 +30,18 @@ import { MightyAcademyLogo } from './BrandLogos';
 const ACADEMY_TRACKS = [
   {
     id: 'maids',
-    title: 'Housekeeping & Sanitization',
+    title: 'BnB & Airbnb Cleaning Excellence',
     divisionName: 'Mighty Maids',
     icon: <Sparkles className="w-5 h-5 text-pink-600" />,
     badgeColor: 'bg-pink-100 text-pink-800 border-pink-200',
-    duration: '40 Practical Hours',
+    duration: '2-Day Intensive Course',
     modules: [
-      { name: 'Eco-Chemical Safety & Detergent Dosing', desc: 'Understanding pH balances, delicate surface care, and pet-friendly cleaners' },
-      { name: '50-Point Standard Inspection', desc: 'Systematic top-to-bottom bedroom, kitchen, and bathroom sanitization' },
-      { name: 'Fabric & Garment Steam Mastery', desc: 'Fine fabric ironing, crease lines, and curtain steaming' },
-      { name: 'Cross-Contamination Prevention', desc: 'Strict color-coded microfiber cloth systems for sterile food & bath zones' }
+      { name: 'Day 1: Foundations & Cleaning Standards', desc: 'Airbnb/BnB expectations, hospitality mindset, hygiene standards, safe eco-chemicals & room-by-room techniques' },
+      { name: 'Day 2: Turnover Process & Restocking', desc: 'Fast turnover between guests, hotel linen presentation, toiletries restocking & 5-point inspection checklist' },
+      { name: 'Time Management, Conduct & Trust', desc: 'Working under tight guest turnaround windows, host communication, confidentiality & property care' },
+      { name: 'Practical Session & Staging Simulation', desc: 'Real-life setup, bed making demonstration, bathroom & kitchen deep scrub, and final manager walkthrough' }
     ],
-    outcome: 'Mighty Certified Residential Housekeeper Diploma'
+    outcome: 'Mighty Maids BnB Cleaning Certificate (Hotel-standard cleaning & 5-star guest satisfaction)'
   },
   {
     id: 'nannies',
@@ -390,7 +390,15 @@ export const MightyAcademy: React.FC<MightyAcademyProps> = ({ onNavigateToAcadem
                 className="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 font-bold text-xs transition-all flex items-center gap-2"
               >
                 <Download className="w-4 h-4 text-purple-400" />
-                <span>Download Prospectus (PDF)</span>
+                <span>2027 Prospectus (PDF)</span>
+              </a>
+              <a
+                href="/assets/aistudio/_MIGHTY_MAIDS_BnB_CLEANING_TRAINING_PROGRAM_FOR_COMMERCIAL_44924c5c.pdf"
+                download="Mighty-Maids-BnB-Cleaning-Program.pdf"
+                className="px-4 py-3 rounded-xl bg-pink-950/70 hover:bg-pink-900 text-pink-200 border border-pink-800/60 font-bold text-xs transition-all flex items-center gap-2"
+              >
+                <Download className="w-4 h-4 text-pink-400" />
+                <span>Maids BnB Syllabus (PDF)</span>
               </a>
               <a
                 href="https://www.academy.mightybrands.co.za/"

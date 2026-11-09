@@ -64,7 +64,7 @@ export const ServiceFAQ: React.FC<ServiceFAQProps> = ({
   });
 
   return (
-    <section id="faq" className="py-20 bg-slate-50/70 border-b border-slate-200">
+    <section id="faq" className="hidden md:block py-20 bg-slate-50/70 border-b border-slate-200">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-10">

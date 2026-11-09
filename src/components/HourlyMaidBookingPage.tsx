@@ -40,6 +40,11 @@ export const HourlyMaidBookingPage: React.FC<HourlyMaidBookingPageProps> = ({
 
   const [hours, setHours] = useState<number>(3);
   const [detergentsRequested, setDetergentsRequested] = useState<boolean>(false);
+  const [ironingRequested, setIroningRequested] = useState<boolean>(false);
+  const [windowCleaningRequested, setWindowCleaningRequested] = useState<boolean>(false);
+  const [ovenCleaningRequested, setOvenCleaningRequested] = useState<boolean>(false);
+  const [carpetCleaningRequested, setCarpetCleaningRequested] = useState<boolean>(false);
+  const [laundryRequested, setLaundryRequested] = useState<boolean>(false);
 
   // Selected Tasks
   const [tasks, setTasks] = useState<{ [key: string]: boolean }>({
@@ -76,10 +81,22 @@ export const HourlyMaidBookingPage: React.FC<HourlyMaidBookingPageProps> = ({
     setTasks((prev) => ({ ...prev, [taskKey]: !prev[taskKey] }));
   };
 
-  // Financial Calculations
+  // Financial Calculations with official Mighty Maids add-ons
   const laborSubtotal = Math.max(MIN_HOURS, hours) * HOURLY_RATE;
-  const detergentFee = detergentsRequested ? 65 : 0;
-  const subtotalZAR = laborSubtotal + detergentFee;
+  const detergentFee = detergentsRequested ? 180 : 0;
+  const ironingFee = ironingRequested ? 185 : 0;
+  const laundryFee = laundryRequested ? 155 : 0;
+  const carpetCleaningFee = carpetCleaningRequested ? 135 : 0;
+  const windowCleaningFee = windowCleaningRequested ? 120 : 0;
+  const ovenCleaningFee = ovenCleaningRequested ? 100 : 0;
+  const subtotalZAR =
+    laborSubtotal +
+    detergentFee +
+    ironingFee +
+    laundryFee +
+    carpetCleaningFee +
+    windowCleaningFee +
+    ovenCleaningFee;
   const vatZAR = Math.round(subtotalZAR * 0.15);
   const totalZAR = subtotalZAR; // Rates in SA typically inclusive
 
@@ -118,10 +135,6 @@ export const HourlyMaidBookingPage: React.FC<HourlyMaidBookingPageProps> = ({
             return 'Clean shower doors, sanitise basins & toilets';
           case 'floorSweepMop':
             return 'Sweep & damp-mop hard floors / vacuum';
-          case 'laundryWashFold':
-            return 'Laundry wash & fold';
-          case 'ironingClothesLinens':
-            return 'Ironing clothes & bed linens';
           case 'wasteDisposal':
             return 'Take out trash and recycling';
           default:
@@ -145,11 +158,71 @@ export const HourlyMaidBookingPage: React.FC<HourlyMaidBookingPageProps> = ({
       lineItems.push({
         divisionId: 'maids',
         divisionName: 'Mighty Maids Supplies',
-        title: 'Home Cleaning Detergent Supplies (Requested)',
+        title: 'Home Cleaning Detergent Supplies (+R180)',
         description: 'Eco-safe surface cleaners, degreasers, sanitizers & microfiber cloths provided for this booking',
-        unitPriceZAR: 65,
+        unitPriceZAR: 180,
         quantity: 1,
-        totalZAR: 65,
+        totalZAR: 180,
+      });
+    }
+
+    if (ironingRequested) {
+      lineItems.push({
+        divisionId: 'maids',
+        divisionName: 'Mighty Maids Add-on',
+        title: 'Ironing Clothing & Bed Linen (+R185)',
+        description: 'Steam pressing and folding of shirts, pants, delicates & bed linen',
+        unitPriceZAR: 185,
+        quantity: 1,
+        totalZAR: 185,
+      });
+    }
+
+    if (laundryRequested) {
+      lineItems.push({
+        divisionId: 'maids',
+        divisionName: 'Mighty Maids Add-on',
+        title: 'Laundry Wash & Fold (+R155)',
+        description: 'Washing machine loading, cycle oversight, hang/dry and neat folding',
+        unitPriceZAR: 155,
+        quantity: 1,
+        totalZAR: 155,
+      });
+    }
+
+    if (carpetCleaningRequested) {
+      lineItems.push({
+        divisionId: 'maids',
+        divisionName: 'Mighty Maids Add-on',
+        title: 'Carpet Cleaning (+R135)',
+        description: 'Deep fiber spot treatment, shampoo extraction and carpet conditioning',
+        unitPriceZAR: 135,
+        quantity: 1,
+        totalZAR: 135,
+      });
+    }
+
+    if (windowCleaningRequested) {
+      lineItems.push({
+        divisionId: 'maids',
+        divisionName: 'Mighty Maids Add-on',
+        title: 'Window Cleaning (+R120)',
+        description: 'Interior and accessible exterior streak-free glass polishing and sill wiping',
+        unitPriceZAR: 120,
+        quantity: 1,
+        totalZAR: 120,
+      });
+    }
+
+    if (ovenCleaningRequested) {
+      lineItems.push({
+        divisionId: 'maids',
+        divisionName: 'Mighty Maids Add-on',
+        title: 'Oven Cleaning (+R100)',
+        description: 'Heavy grease degreasing, baked-on grime removal and oven rack restoration',
+        unitPriceZAR: 100,
+        quantity: 1,
+        totalZAR: 100,
       });
     }
 
@@ -157,8 +230,13 @@ export const HourlyMaidBookingPage: React.FC<HourlyMaidBookingPageProps> = ({
       `Hourly Maid Service: ${hours} hours at R${HOURLY_RATE}/hr (Minimum 3 hrs).`,
       `Tasks Selected: ${activeTasksList.join(', ')}.`,
       detergentsRequested
-        ? 'Supplies for home: Detergents provided on request (+R65).'
+        ? 'Supplies for home: Detergents provided on request (+R180).'
         : 'Supplies for home: Client supplies own household cleaning detergents & supplies.',
+      ...(ironingRequested ? ['Add-on: Ironing clothing & bed linen (+R185).'] : []),
+      ...(laundryRequested ? ['Add-on: Laundry wash & fold (+R155).'] : []),
+      ...(carpetCleaningRequested ? ['Add-on: Carpet cleaning (+R135).'] : []),
+      ...(windowCleaningRequested ? ['Add-on: Window cleaning (+R120).'] : []),
+      ...(ovenCleaningRequested ? ['Add-on: Oven cleaning (+R100).'] : []),
       'Staffed by Mighty Academy Certified cleaner with verified 7-tier criminal background screening.',
     ];
 
@@ -426,33 +504,143 @@ export const HourlyMaidBookingPage: React.FC<HourlyMaidBookingPageProps> = ({
               </div>
             </div>
 
-            {/* Step 3: Supplies & Detergents Policy */}
+            {/* Step 3: Optional Specialized Add-ons & Supplies */}
             <div className="space-y-3 pt-4 border-t border-slate-100">
-              <label className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 text-pink-600" />
-                <span>3. Supplies for Home (Detergent Policy)</span>
-              </label>
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 text-pink-600" />
+                  <span>3. Optional Specialized Add-ons & Supplies</span>
+                </label>
+                <span className="text-[11px] text-slate-500">Tick any required add-on services</span>
+              </div>
 
-              <label className="flex items-start gap-3 p-3.5 bg-slate-50 border border-slate-200 rounded-2xl cursor-pointer hover:bg-slate-100/70 transition-colors">
-                <input
-                  type="checkbox"
-                  checked={detergentsRequested}
-                  onChange={(e) => setDetergentsRequested(e.target.checked)}
-                  className="mt-0.5 rounded text-pink-600 focus:ring-pink-500"
-                />
-                <div className="text-xs space-y-1">
-                  <div className="font-bold text-slate-900 flex items-center justify-between">
-                    <span>Request Cleaning Detergents Supplied (+R65)</span>
-                    <span className="text-[10px] text-pink-700 font-bold bg-pink-100 px-2 py-0.5 rounded-full">
-                      Supplied when requested
-                    </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {/* 1. Cleaning Detergents */}
+                <label className="flex items-start gap-2.5 p-3 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100/70 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={detergentsRequested}
+                    onChange={(e) => setDetergentsRequested(e.target.checked)}
+                    className="mt-0.5 rounded text-pink-600 focus:ring-pink-500"
+                  />
+                  <div className="text-xs space-y-0.5">
+                    <div className="font-bold text-slate-900 flex items-center justify-between gap-1">
+                      <span>Cleaning Detergents</span>
+                      <span className="text-[11px] text-pink-700 font-bold bg-pink-100 px-1.5 py-0.2 rounded font-mono">
+                        +R180
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-slate-500 leading-tight">
+                      Eco-friendly detergents & cloths supplied for visit.
+                    </p>
                   </div>
-                  <p className="text-[11px] text-slate-500 leading-relaxed">
-                    Supplies for home: Detergents are supplied only when requested and quoted accordingly (+R65). 
-                    If unchecked, our cleaners will use your own preferred household cleaning supplies.
-                  </p>
-                </div>
-              </label>
+                </label>
+
+                {/* 2. Ironing clothing & bed linen */}
+                <label className="flex items-start gap-2.5 p-3 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100/70 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={ironingRequested}
+                    onChange={(e) => setIroningRequested(e.target.checked)}
+                    className="mt-0.5 rounded text-pink-600 focus:ring-pink-500"
+                  />
+                  <div className="text-xs space-y-0.5">
+                    <div className="font-bold text-slate-900 flex items-center justify-between gap-1">
+                      <span>Ironing Clothing & Bed Linen</span>
+                      <span className="text-[11px] text-pink-700 font-bold bg-pink-100 px-1.5 py-0.2 rounded font-mono">
+                        +R185
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-slate-500 leading-tight">
+                      Steam pressing apparel, shirts & bed linens.
+                    </p>
+                  </div>
+                </label>
+
+                {/* 3. Laundry wash & fold */}
+                <label className="flex items-start gap-2.5 p-3 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100/70 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={laundryRequested}
+                    onChange={(e) => setLaundryRequested(e.target.checked)}
+                    className="mt-0.5 rounded text-pink-600 focus:ring-pink-500"
+                  />
+                  <div className="text-xs space-y-0.5">
+                    <div className="font-bold text-slate-900 flex items-center justify-between gap-1">
+                      <span>Laundry Wash & Fold</span>
+                      <span className="text-[11px] text-pink-700 font-bold bg-pink-100 px-1.5 py-0.2 rounded font-mono">
+                        +R155
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-slate-500 leading-tight">
+                      Washing machine loads, drying oversight & folding.
+                    </p>
+                  </div>
+                </label>
+
+                {/* 4. Carpet cleaning */}
+                <label className="flex items-start gap-2.5 p-3 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100/70 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={carpetCleaningRequested}
+                    onChange={(e) => setCarpetCleaningRequested(e.target.checked)}
+                    className="mt-0.5 rounded text-pink-600 focus:ring-pink-500"
+                  />
+                  <div className="text-xs space-y-0.5">
+                    <div className="font-bold text-slate-900 flex items-center justify-between gap-1">
+                      <span>Carpet Cleaning</span>
+                      <span className="text-[11px] text-pink-700 font-bold bg-pink-100 px-1.5 py-0.2 rounded font-mono">
+                        +R135
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-slate-500 leading-tight">
+                      Fiber spot clean, shampoo extraction & conditioning.
+                    </p>
+                  </div>
+                </label>
+
+                {/* 5. Window cleaning */}
+                <label className="flex items-start gap-2.5 p-3 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100/70 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={windowCleaningRequested}
+                    onChange={(e) => setWindowCleaningRequested(e.target.checked)}
+                    className="mt-0.5 rounded text-pink-600 focus:ring-pink-500"
+                  />
+                  <div className="text-xs space-y-0.5">
+                    <div className="font-bold text-slate-900 flex items-center justify-between gap-1">
+                      <span>Window Cleaning</span>
+                      <span className="text-[11px] text-pink-700 font-bold bg-pink-100 px-1.5 py-0.2 rounded font-mono">
+                        +R120
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-slate-500 leading-tight">
+                      Interior & accessible exterior streak-free glass.
+                    </p>
+                  </div>
+                </label>
+
+                {/* 6. Oven cleaning */}
+                <label className="flex items-start gap-2.5 p-3 bg-slate-50 border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-100/70 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={ovenCleaningRequested}
+                    onChange={(e) => setOvenCleaningRequested(e.target.checked)}
+                    className="mt-0.5 rounded text-pink-600 focus:ring-pink-500"
+                  />
+                  <div className="text-xs space-y-0.5">
+                    <div className="font-bold text-slate-900 flex items-center justify-between gap-1">
+                      <span>Oven Cleaning</span>
+                      <span className="text-[11px] text-pink-700 font-bold bg-pink-100 px-1.5 py-0.2 rounded font-mono">
+                        +R100
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-slate-500 leading-tight">
+                      Deep interior degreasing & rack restoration.
+                    </p>
+                  </div>
+                </label>
+              </div>
             </div>
 
             {/* Step 4: Physical Address & Property Type */}
@@ -702,12 +890,49 @@ export const HourlyMaidBookingPage: React.FC<HourlyMaidBookingPageProps> = ({
                   <span className="font-mono font-bold text-slate-900">R{laborSubtotal.toLocaleString()}</span>
                 </div>
 
-                {detergentsRequested ? (
-                  <div className="flex justify-between items-center text-pink-700 font-semibold bg-pink-50/70 p-2 rounded-lg">
+                {detergentsRequested && (
+                  <div className="flex justify-between items-center text-pink-700 font-semibold bg-pink-50/70 p-1.5 rounded-lg">
                     <span>Cleaning Detergents:</span>
-                    <span className="font-mono font-bold">+R65</span>
+                    <span className="font-mono font-bold">+R180</span>
                   </div>
-                ) : (
+                )}
+
+                {ironingRequested && (
+                  <div className="flex justify-between items-center text-pink-700 font-semibold bg-pink-50/70 p-1.5 rounded-lg">
+                    <span>Ironing Clothes & Linen:</span>
+                    <span className="font-mono font-bold">+R185</span>
+                  </div>
+                )}
+
+                {laundryRequested && (
+                  <div className="flex justify-between items-center text-pink-700 font-semibold bg-pink-50/70 p-1.5 rounded-lg">
+                    <span>Laundry Wash & Fold:</span>
+                    <span className="font-mono font-bold">+R155</span>
+                  </div>
+                )}
+
+                {carpetCleaningRequested && (
+                  <div className="flex justify-between items-center text-pink-700 font-semibold bg-pink-50/70 p-1.5 rounded-lg">
+                    <span>Carpet Cleaning:</span>
+                    <span className="font-mono font-bold">+R135</span>
+                  </div>
+                )}
+
+                {windowCleaningRequested && (
+                  <div className="flex justify-between items-center text-pink-700 font-semibold bg-pink-50/70 p-1.5 rounded-lg">
+                    <span>Window Cleaning:</span>
+                    <span className="font-mono font-bold">+R120</span>
+                  </div>
+                )}
+
+                {ovenCleaningRequested && (
+                  <div className="flex justify-between items-center text-pink-700 font-semibold bg-pink-50/70 p-1.5 rounded-lg">
+                    <span>Oven Cleaning:</span>
+                    <span className="font-mono font-bold">+R100</span>
+                  </div>
+                )}
+
+                {!detergentsRequested && (
                   <div className="text-[11px] text-slate-400 italic">
                     Supplies: Client provides own detergents
                   </div>

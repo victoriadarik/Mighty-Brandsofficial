@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
+import { BrandBanner } from './components/BrandBanner';
 import { Hero } from './components/Hero';
 import { DivisionExplorer } from './components/DivisionExplorer';
 import { MightyStandard } from './components/MightyStandard';
@@ -7,18 +8,16 @@ import { MightyAcademy } from './components/MightyAcademy';
 import { BundleCalculator } from './components/BundleCalculator';
 import { ServiceMatcher } from './components/ServiceMatcher';
 import { ReviewsSection } from './components/ReviewsSection';
-import { EmergencyBanner } from './components/EmergencyBanner';
 import { ServiceFAQ } from './components/ServiceFAQ';
 import { Footer } from './components/Footer';
 import { BookingModal, BookingRecord } from './components/BookingModal';
 import { MyBookingsDrawer } from './components/MyBookingsDrawer';
 import { QuoteBreakdownLandingPage, QuoteRecord } from './components/QuoteBreakdownLandingPage';
 import { HourlyMaidBookingPage } from './components/HourlyMaidBookingPage';
-import { HourlyGardenerBookingPage } from './components/HourlyGardenerBookingPage';
 import { MightyAcademyPage } from './components/MightyAcademyPage';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'maid-hourly' | 'gardener-hourly' | 'academy'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'maid-hourly' | 'academy'>('home');
   const [selectedDivisionId, setSelectedDivisionId] = useState<string>('maids');
 
   // Booking Modal State
@@ -195,23 +194,6 @@ export default function App() {
     );
   }
 
-  // Dedicated Separate Page: Hourly Gardener Booking (R100/hr, Min 3 hrs)
-  if (currentPage === 'gardener-hourly') {
-    return (
-      <HourlyGardenerBookingPage
-        onBackToApp={() => {
-          setCurrentPage('home');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
-        onBookingSubmitted={handleBookingSubmitted}
-        onViewQuoteBreakdown={(quote) => {
-          setActiveQuote(quote);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
-      />
-    );
-  }
-
   // Dedicated Separate Page: Mighty Academy (Vocational Training & 2027 Prospectus)
   if (currentPage === 'academy') {
     return (
@@ -229,11 +211,6 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const navigateToGardenerHourly = () => {
-    setCurrentPage('gardener-hourly');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const navigateToAcademy = () => {
     setCurrentPage('academy');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -247,12 +224,17 @@ export default function App() {
         bookingCount={bookings.length}
         onOpenMyBookings={() => setIsMyBookingsOpen(true)}
         onNavigateToMaidHourly={navigateToMaidHourly}
-        onNavigateToGardenerHourly={navigateToGardenerHourly}
         onNavigateToAcademy={navigateToAcademy}
       />
 
-      {/* 2. Emergency 24/7 Dispatch Bar (Plumbing & Rapid Service) */}
-      <EmergencyBanner onOpenEmergencyBooking={handleOpenEmergencyBooking} />
+      {/* 2. Unified Mighty Brands Top Banner (Network, Vetting, Direct Lines) */}
+      <BrandBanner
+        onOpenBooking={() => handleOpenBooking()}
+        onExploreDivisions={() => {
+          const el = document.getElementById('divisions');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }}
+      />
 
       <main className="flex-1">
         {/* 3. Hero Section with Value Proposition & Proof Metrics */}
@@ -261,7 +243,6 @@ export default function App() {
           onSelectDivision={setSelectedDivisionId}
           onOpenBooking={handleOpenBooking}
           onNavigateToMaidHourly={navigateToMaidHourly}
-          onNavigateToGardenerHourly={navigateToGardenerHourly}
         />
 
         {/* 4. Division Explorer with Live Estimators & Interactive Tabs */}
@@ -270,7 +251,6 @@ export default function App() {
           onSelectDivision={setSelectedDivisionId}
           onOpenBooking={handleOpenBooking}
           onNavigateToMaidHourly={navigateToMaidHourly}
-          onNavigateToGardenerHourly={navigateToGardenerHourly}
         />
 
         {/* 4b. Interactive Service FAQ Section */}
@@ -303,7 +283,6 @@ export default function App() {
         onSelectDivision={setSelectedDivisionId}
         onOpenBooking={handleOpenBooking}
         onNavigateToMaidHourly={navigateToMaidHourly}
-        onNavigateToGardenerHourly={navigateToGardenerHourly}
         onNavigateToAcademy={navigateToAcademy}
       />
 

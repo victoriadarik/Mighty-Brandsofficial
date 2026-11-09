@@ -72,7 +72,8 @@ export const DIVISIONS: Division[] = [
       'Daily Cleaning Activities (Maintenance)',
       'Once Off, Twice A Week & 3x A Week Plans',
       'Domestic Call Out Subscriptions (R150–R400/mo)',
-      'Detergents Supplied Upon Request'
+      'Detergents Supplied Upon Request (+R180)',
+      'Add-ons: Ironing (+R185), Windows (+R120), Oven (+R100), Carpet (+R135)'
     ],
     services: [
       {
@@ -97,7 +98,7 @@ export const DIVISIONS: Division[] = [
         popularFor: 'Tenant turnover, property sales, new home arrivals'
       }
     ],
-    pricingNote: 'Pricing applies to Daily Cleaning Activities (Maintenance). All cost breakdowns are an estimate quote (actual quote could be a bit less or more; the office sends final quote). Detergents supplied on request. Pay securely via PayFast Instant EFT.',
+    pricingNote: 'Pricing applies to Daily Cleaning Activities (Maintenance). Optional add-ons: Cleaning detergents (+R180), Ironing clothing & bed linen (+R185), Window cleaning (+R120), Oven cleaning (+R100), Carpet cleaning (+R135). All cost breakdowns are an estimate quote (actual quote sent by office). Pay securely via PayFast Instant EFT.',
     instantQuoteType: 'rooms',
     baseRate: 400,
     rateUnit: 'per scheduled visit'
@@ -231,11 +232,11 @@ export const DIVISIONS: Division[] = [
   {
     id: 'plumbing',
     slug: 'mighty-plumbing',
-    name: 'Mighty Plumbing Services',
+    name: 'Mighty Plumbers',
     bundleGroup: 'property-grounds',
-    brandKicker: 'Monthly Maintenance & General Plumbing',
-    tagline: 'Proactive monthly plumbing rounds, bathroom and sink leak detection, clean pipes, and general maintenance for homes.',
-    status: 'Expanding Now',
+    brandKicker: 'Practical Plumbing Solutions · Cape Town',
+    tagline: 'Practical plumbing. Less disruption. From a leaking tap to a new plumbing installation, get help with the everyday problems that keep your home from running smoothly.',
+    status: 'Established',
     image: '/src/assets/images/division_mighty_plumbing_1792449786043.jpg',
     logo: '/assets/aistudio/mighty_plumbers_1_bba592e7.png',
     colorName: 'Sky Blue',
@@ -248,57 +249,65 @@ export const DIVISIONS: Division[] = [
       accent: 'text-sky-600',
       ring: 'focus:ring-sky-500',
     },
-    overview: 'Prevent costly water damage, dripping taps, and backed-up drains before they start. Our dedicated monthly plumbing rounds inspect every bathroom, sink, shutoff valve, and pipe run—detecting hairline leaks, descaling pipes, testing water pressure, and cleaning drain traps. Bundles together with Mighty Gardeners and Mighty Handyman for complete property upkeep.',
-    heroHeadline: 'Monthly plumbing rounds & general maintenance: bathroom/sink leak sweeps & clean pipes.',
+    overview: 'Practical plumbing solutions across Cape Town with clear conversation about the work required. Whether repairing a persistent drip, clearing slow-draining sinks and backed-up waste pipes, fixing loose fittings and running toilets, or preparing new sink and fixture installations. Transparent quotes, prompt dispatch, and follow-up recommendations. Visit our dedicated portal at www.plumbing.mightybrands.co.za.',
+    heroHeadline: 'Practical plumbing. Less disruption. Leak repairs, blocked drains, taps, toilets & installations.',
     credentials: [
-      'Multi-point bathroom & sink leak detection sweeps',
-      'Preventative drain clearing & pipe descaling rounds',
-      'General plumbing fixes: taps, traps, valves & running toilets',
-      'Bundles seamlessly with Mighty Gardeners & Mighty Handyman',
-      'PayFast Instant EFT monthly recurring billing'
+      'Call & WhatsApp: 066 322 7557 · Office: 087 8222 984 · callout@mightyplumbers.co.za',
+      'Leak detection & repairs: Dripping pipes, damp patches, unexplained leaks',
+      'Blocked drains: Slow-draining sinks and backed-up waste pipes',
+      'Tap & toilet repairs: Dripping taps, loose fittings, running toilets',
+      'Plumbing installations: New sinks, basins, taps, toilets & connections',
+      'Dedicated website: www.plumbing.mightybrands.co.za'
     ],
     keyHighlights: [
-      'Monthly Scheduled Plumbing Care Rounds',
-      'Under-Sink, Toilet & Bath Leak Detection',
-      'Preventative Pipe Cleaning & Trap Flushes',
-      'General Faucet, Valve & Fixture Maintenance'
+      'Leak Detection & Pipe Repairs',
+      'Blocked Drain Clearing',
+      'Tap & Running Toilet Repairs',
+      'Plumbing & Fixture Installations'
     ],
     services: [
       {
-        id: 'monthly-round',
-        name: 'Monthly Home Plumbing Round',
-        description: 'Complete inspection of all home bathrooms, sinks, faucets, and supply valves with moisture sensors and pressure audit.',
-        typicalRate: 'From R480 / month',
-        popularFor: 'Residential homes, preventing hidden leaks and water rot'
+        id: 'leak-repairs',
+        name: 'Leak Detection & Pipe Repairs',
+        description: 'Dripping pipes, damp patches or unexplained leaks. We assess the problem, discuss the repair, and restore a sound water connection.',
+        typicalRate: 'From R480 (Assessment & repair quote)',
+        popularFor: 'Dripping pipes, ceiling damp patches, mystery water leaks'
       },
       {
-        id: 'pipe-clean',
-        name: 'Pipe & Drain Cleaning Sweep',
-        description: 'Preventative trap clearing, mechanical line cleaning, and enzyme pipe descaling to keep water flowing freely.',
-        typicalRate: 'From R350 / visit (or included in monthly)',
-        popularFor: 'Kitchen grease traps, bathroom sink buildup, slow tubs'
+        id: 'blocked-drains',
+        name: 'Blocked Drains & Waste Pipe Clearing',
+        description: 'Slow-draining sinks, backed-up waste pipes, and drain clears with proper mechanical unblocking and flow check.',
+        typicalRate: 'From R450 (Based on blockage access & scope)',
+        popularFor: 'Kitchen grease traps, bathroom sinks, backed-up shower drains'
       },
       {
-        id: 'fixture-audit',
-        name: 'General Plumbing Repairs & Fixes',
-        description: 'Cartridge replacements, aerator cleanouts, toilet flapper tuning, and repair of weeping sink joints.',
-        typicalRate: 'From R250 / service call',
-        popularFor: 'Dripping faucets, running toilets, mineral scale'
+        id: 'tap-toilet-repairs',
+        name: 'Tap & Toilet Repairs',
+        description: 'Dripping taps, loose fittings, constantly running toilets, cartridge swaps, and valve replacements suited to the fixture.',
+        typicalRate: 'From R350 (Repair or replacement options)',
+        popularFor: 'Running toilet cisterns, dripping mixers, loose shutoff valves'
+      },
+      {
+        id: 'plumbing-installations',
+        name: 'Plumbing Installations',
+        description: 'Planning a new sink, basin, tap, toilet or appliance hookup. We discuss connection requirements before starting.',
+        typicalRate: 'Custom Quotation',
+        popularFor: 'New sinks, bathroom fixture upgrades, dishwasher/washing connections'
       }
     ],
-    pricingNote: 'Fixed monthly maintenance plans in ZAR. Bundle with Mighty Gardeners for combined savings.',
+    pricingNote: 'Practical solutions for your home. All cost breakdowns are an estimate quote (final quote could be a bit less or more; the office sends final quote). Contact callout@mightyplumbers.co.za or WhatsApp 066 322 7557.',
     instantQuoteType: 'rooms',
     baseRate: 480,
-    rateUnit: 'per monthly round'
+    rateUnit: 'per service call'
   },
   {
     id: 'gardeners',
     slug: 'mighty-gardeners',
     name: 'Mighty Gardeners Landscaping',
     bundleGroup: 'property-grounds',
-    brandKicker: 'Regular Garden Rounds, Mowing & Tidying',
-    tagline: 'Basic regular garden maintenance: lawn mowing, trimming, edging, weeding and general tidying on a regular round - for homes.',
-    status: 'Expanding Now',
+    brandKicker: 'Workload & Task-Based Garden Care · Cape Town',
+    tagline: 'Reliable garden care for Cape Town homes & businesses: lawn care, garden clean-ups, pruning and landscaping quoted strictly by workload and tasks.',
+    status: 'Established',
     image: '/src/assets/images/division_mighty_gardeners_1792449770857.jpg',
     logo: '/assets/aistudio/mighty_gardners_52f6dd9b.png',
     colorName: 'Emerald & Gold',
@@ -311,48 +320,56 @@ export const DIVISIONS: Division[] = [
       accent: 'text-emerald-600',
       ring: 'focus:ring-emerald-500',
     },
-    overview: 'Your home’s regular garden round. We keep residential grounds looking pristine with scheduled lawn mowing, perimeter border edging, hedge and bush trimming, thorough flowerbed weeding, and full walkway and patio tidying. Greener spaces, better lives. Bundles directly with Mighty Handyman and Mighty Plumbing for complete home and grounds maintenance.',
-    heroHeadline: 'Basic regular garden maintenance: mowing, trimming, edging, weeding & general tidying.',
+    overview: 'Every garden is different. We quote according to the size of the garden, condition of the property, work required, and frequency of visits—not an hourly rate. From regular lawn mowing, edging, weeding, and plant-bed maintenance to once-off overgrown garden clean-ups, hedge trimming, and monthly packages. Greener spaces, better lives. Bundles directly with Mighty Handyman fixes and Mighty Plumbing.',
+    heroHeadline: 'Reliable garden care: quoted strictly by workload, garden size & tasks to be done.',
     credentials: [
-      'Scheduled recurring residential rounds (weekly or bi-weekly)',
-      'Precision lawn cut, walkway edging, and border trimming',
-      'Hand weeding of flowerbeds, gravel, and paving joints',
-      'Bundles directly with Mighty Handyman & Mighty Plumbing',
-      'PayFast Instant EFT supported'
+      'No hourly rates: Quoted by garden size, workload & tasks to be done',
+      'Small (R350–R500), Medium (R500–R800), Large (R800+) garden scope',
+      'One-off garden clean-ups & resets from R1,200–R1,500 (site quote for overgrown)',
+      'Monthly packages: Mighty Basic (R1,400/mo), Mighty Care (R2,000/mo), Mighty Complete (R3,000/mo)',
+      'Equipped with commercial mowers, trimmers, shears & safety gear',
+      'Direct WhatsApp: 066 322 7557 · Office: 087 8222 984'
     ],
     keyHighlights: [
-      'Regular Residential Garden Rounds',
-      'Lawn Mowing & Clean Perimeter Edging',
-      'Hedge, Bush & Shrub Trimming',
-      'Flowerbed Weeding & General Yard Tidying'
+      'Workload & Task-Based Quotation',
+      'Regular Garden Maintenance (Weekly/Fortnightly/Monthly)',
+      'One-Off Garden Clean-Ups & Resets',
+      'Lawn Mowing, Edging, Weeding & Hedge Trimming'
     ],
     services: [
       {
-        id: 'regular-round',
-        name: 'The Regular Garden Round',
-        description: 'Our signature recurring home visit: lawn mowing, trimming, edging, weeding and general tidying on a regular round - for homes.',
-        typicalRate: 'From R280 / round',
-        popularFor: 'Standard residential homes on weekly or bi-weekly schedules'
+        id: 'garden-maintenance-workload',
+        name: 'Regular Garden Maintenance (By Workload)',
+        description: 'Lawn mowing, lawn edging, weeding, garden tidying, basic pruning, plant-bed maintenance, leaf clearing. Small garden R350–R500, Medium R500–R800, Large R800+.',
+        typicalRate: 'R350 – R800+ (Based on yard size & tasks)',
+        popularFor: 'Residential homes, townhouse gardens, complexes, estates'
       },
       {
-        id: 'weeding-tidying',
-        name: 'Bed Weeding & General Yard Tidy',
-        description: 'Detailed hand-pulling of weeds from flowerbeds and driveways, leaf collection, pruning deadheads, and outdoor sweep.',
-        typicalRate: 'From R350 / visit',
-        popularFor: 'Homes needing extra attention to flowerbeds and paving'
+        id: 'onceoff-garden-cleanup',
+        name: 'One-Off Garden Clean-Up / Reset',
+        description: 'Cut back overgrown vegetation, weed removal, grass cutting, general clearing, and refuse removal for neglected or overgrown gardens.',
+        typicalRate: 'From R1,200 – R1,500 (Site quote for heavily overgrown)',
+        popularFor: 'Overgrown seasonal yards, pre-sale property staging, tenant move resets'
       },
       {
-        id: 'trimming-hedges',
-        name: 'Hedge & Bush Trimming Round',
-        description: 'Clean geometric shaping of perimeter hedges, shrubs, and ornamental garden bushes with haul-away.',
-        typicalRate: 'From R390 / round',
-        popularFor: 'Overgrown boundary hedges, seasonal shrub care'
+        id: 'monthly-garden-packages',
+        name: 'Monthly Maintenance Packages',
+        description: 'Mighty Basic (R1,400/mo, 2 visits), Mighty Care (R2,000/mo, 4 visits), Mighty Complete (R3,000/mo, weekly visits with priority care).',
+        typicalRate: 'R1,400 – R3,000 / month',
+        popularFor: 'Consistent all-year grounds care with dedicated rounds'
+      },
+      {
+        id: 'hedge-tree-landscaping',
+        name: 'Hedge Trimming, Landscaping & Lawn Installation',
+        description: 'Hedge trimming (from R650), instant lawn per m² quote, and simple landscaping solutions designed around property needs.',
+        typicalRate: 'Quoted by linear metre / m² / site visit',
+        popularFor: 'Perimeter hedge shaping, new roll-on lawn, garden beautification'
       }
     ],
-    pricingNote: 'Dependable regular round calendar in ZAR. Combine with Mighty Handyman for complete grounds & repair care.',
+    pricingNote: 'No hourly rate — pricing is based strictly on garden size, workload, and tasks to be done. All cost breakdowns are an estimate quote (final quote could be a bit less or more; the office sends final quote).',
     instantQuoteType: 'sqft',
-    baseRate: 280,
-    rateUnit: 'per scheduled garden round'
+    baseRate: 450,
+    rateUnit: 'per garden visit / workload'
   },
   {
     id: 'handyman',
@@ -444,7 +461,7 @@ export const POPULAR_BUNDLES: BundleCombo[] = [
     category: 'indoor-family',
     tagline: 'Moving combined with cleaners to help pack, pre-clean, clean old home, and wipe new furniture.',
     divisionIds: ['movers', 'maids'],
-    discountPct: 15,
+    discountPct: 5,
     highlight: 'Movers transport everything while maids pack, scrub the old house for deposit return, and wipe furniture at the new place.'
   },
   {
@@ -452,7 +469,7 @@ export const POPULAR_BUNDLES: BundleCombo[] = [
     category: 'indoor-family',
     tagline: 'Mighty Maids housekeeping subscriptions paired with trusted Mighty Nannies childcare.',
     divisionIds: ['maids', 'nannies'],
-    discountPct: 15,
+    discountPct: 5,
     highlight: 'Recurring weekly or multi-weekly house cleaning paired with certified, CPR-vetted nanny support.'
   },
   {
@@ -460,7 +477,7 @@ export const POPULAR_BUNDLES: BundleCombo[] = [
     category: 'indoor-family',
     tagline: 'Movers transport, maids pack and clean, while nannies care for the children.',
     divisionIds: ['movers', 'maids', 'nannies'],
-    discountPct: 20,
+    discountPct: 5,
     highlight: 'Zero chaos on move day: movers handle heavy lifting, cleaners tackle pre/post cleans, and a nanny cares for your kids.'
   },
 
@@ -470,7 +487,7 @@ export const POPULAR_BUNDLES: BundleCombo[] = [
     category: 'property-grounds',
     tagline: 'Regular garden round (mowing, trimming, weeding) combined with handyman fixing services with own tools.',
     divisionIds: ['gardeners', 'handyman'],
-    discountPct: 15,
+    discountPct: 5,
     highlight: 'Mighty Handyman brings its own tools to fix doors, cupboards, tables, chairs, painting & gutters while gardeners mow, edge & tidy the grounds.'
   },
   {
@@ -478,7 +495,7 @@ export const POPULAR_BUNDLES: BundleCombo[] = [
     category: 'property-grounds',
     tagline: 'Monthly plumbing leak detection & clean pipes bundled with regular garden rounds.',
     divisionIds: ['plumbing', 'gardeners'],
-    discountPct: 15,
+    discountPct: 5,
     highlight: 'Mighty Plumbing monthly rounds (bathroom/sink leak sweeps & clean pipes) + Mighty Gardeners (mowing, trimming, edging, weeding & tidying).'
   },
   {
@@ -486,7 +503,7 @@ export const POPULAR_BUNDLES: BundleCombo[] = [
     category: 'property-grounds',
     tagline: 'Garden rounds + Handyman fixing services + Monthly plumbing leak sweeps.',
     divisionIds: ['gardeners', 'handyman', 'plumbing'],
-    discountPct: 20,
+    discountPct: 5,
     highlight: 'Total peace of mind: lush garden upkeep, squeak-free doors & cupboards with own tools, and leak-free bathroom & sink pipes.'
   }
 ];

@@ -40,6 +40,22 @@ interface CourseItem {
 
 const ACADEMY_COURSES: CourseItem[] = [
   {
+    id: 'bnb-cleaning',
+    number: 'Specialised Course',
+    name: 'Mighty Maids BnB Cleaning Training Program',
+    duration: '2-Day Intensive Course',
+    rate: 'Airbnb & BnB Excellence',
+    highlightRate: true,
+    category: 'Home & Care',
+    description: 'Equips maids with the skills, standards, and professionalism required for Airbnb & BnB cleaning excellence: foundations, room-by-room techniques, guest turnovers, and 5-star quality control.',
+    syllabusHighlights: [
+      'Day 1: Foundations, guest experience mindset, hygiene & eco-chemical safety',
+      'Day 2: Fast guest turnovers, hotel linen presentation & restocking essentials',
+      'Time management under pressure & professional host communication',
+      'Practical Session: Simulation, bed making, deep clean & Mighty Maids BnB Certificate'
+    ]
+  },
+  {
     id: 'culinary',
     number: 'Course 13',
     name: 'Culinary & Baking Essentials',
@@ -316,6 +332,15 @@ export const MightyAcademyPage: React.FC<MightyAcademyPageProps> = ({ onBackToAp
                 >
                   <Download className="w-4 h-4 text-amber-400" />
                   <span>Company Profile (PDF)</span>
+                </a>
+
+                <a
+                  href="/assets/aistudio/_MIGHTY_MAIDS_BnB_CLEANING_TRAINING_PROGRAM_FOR_COMMERCIAL_44924c5c.pdf"
+                  download="Mighty-Maids-BnB-Cleaning-Program.pdf"
+                  className="px-4 py-3 rounded-xl bg-pink-950/70 hover:bg-pink-900 text-pink-200 border border-pink-800/60 font-bold text-xs transition-all flex items-center gap-2"
+                >
+                  <Download className="w-4 h-4 text-pink-400" />
+                  <span>Maids BnB Syllabus (PDF)</span>
                 </a>
 
                 <button

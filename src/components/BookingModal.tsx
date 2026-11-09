@@ -92,11 +92,16 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const [propertyType, setPropertyType] = useState<string>('2 Bed Apartment');
   const [notes, setNotes] = useState<string>('');
 
-  // Mighty Maids Specific: Daily Activities vs Call Out Subscription + Detergents
+  // Mighty Maids Specific: Daily Activities vs Call Out Subscription + 6 Add-ons
   const [maidPlanMode, setMaidPlanMode] = useState<'daily' | 'subscription'>('daily');
   const [maidFrequency, setMaidFrequency] = useState<MaidFrequency>('once-off');
   const [maidCallOutPlanId, setMaidCallOutPlanId] = useState<string>('standard');
   const [maidDetergentsRequested, setMaidDetergentsRequested] = useState<boolean>(false);
+  const [maidIroningRequested, setMaidIroningRequested] = useState<boolean>(false);
+  const [maidLaundryRequested, setMaidLaundryRequested] = useState<boolean>(false);
+  const [maidCarpetRequested, setMaidCarpetRequested] = useState<boolean>(false);
+  const [maidWindowRequested, setMaidWindowRequested] = useState<boolean>(false);
+  const [maidOvenRequested, setMaidOvenRequested] = useState<boolean>(false);
 
   // Specialized Options: Move & Clean
   const [movePackHelp, setMovePackHelp] = useState(false);
@@ -152,8 +157,23 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           }
         }
 
-        if (initialNotes.includes('Detergents requested: Yes') || initialNotes.includes('with detergents requested')) {
+        if (initialNotes.includes('Detergents requested: Yes') || initialNotes.includes('with detergents requested') || initialNotes.includes('Cleaning Detergents (+R180)')) {
           setMaidDetergentsRequested(true);
+        }
+        if (initialNotes.includes('Ironing') || initialNotes.includes('ironing')) {
+          setMaidIroningRequested(true);
+        }
+        if (initialNotes.includes('Laundry') || initialNotes.includes('laundry')) {
+          setMaidLaundryRequested(true);
+        }
+        if (initialNotes.includes('Carpet') || initialNotes.includes('carpet')) {
+          setMaidCarpetRequested(true);
+        }
+        if (initialNotes.includes('Window') || initialNotes.includes('window')) {
+          setMaidWindowRequested(true);
+        }
+        if (initialNotes.includes('Oven') || initialNotes.includes('oven')) {
+          setMaidOvenRequested(true);
         }
       }
       setErrors({});
@@ -259,20 +279,85 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           );
         }
 
-        // Home cleaning detergents option
+        // Home cleaning detergents & optional add-ons
         if (maidDetergentsRequested) {
           lineItems.push({
             divisionId: 'maids',
             divisionName: 'Mighty Maids Supplies',
-            title: 'Home Cleaning Detergent Supplies (Requested)',
+            title: 'Home Cleaning Detergent Supplies (+R180)',
             description: 'Full eco-friendly cleaning detergents provided for this visit (supplied on request)',
-            unitPriceZAR: 65,
+            unitPriceZAR: 180,
             quantity: 1,
-            totalZAR: 65,
+            totalZAR: 180,
           });
-          specialInclusions.push('Supplies for home: Cleaning detergents supplied upon request (+R65).');
+          specialInclusions.push('Supplies for home: Cleaning detergents supplied upon request (+R180).');
         } else {
           specialInclusions.push('Supplies for home: Client supplies own household cleaning detergents & supplies.');
+        }
+
+        if (maidIroningRequested) {
+          lineItems.push({
+            divisionId: 'maids',
+            divisionName: 'Mighty Maids Add-on',
+            title: 'Ironing Clothing & Bed Linen (+R185)',
+            description: 'Dedicated steam pressing and neat folding of garments and bed linens',
+            unitPriceZAR: 185,
+            quantity: 1,
+            totalZAR: 185,
+          });
+          specialInclusions.push('Add-on: Ironing clothing & bed linen (+R185).');
+        }
+
+        if (maidLaundryRequested) {
+          lineItems.push({
+            divisionId: 'maids',
+            divisionName: 'Mighty Maids Add-on',
+            title: 'Laundry Wash & Fold (+R155)',
+            description: 'Machine cycle management, drying oversight and organized folding',
+            unitPriceZAR: 155,
+            quantity: 1,
+            totalZAR: 155,
+          });
+          specialInclusions.push('Add-on: Laundry wash & fold (+R155).');
+        }
+
+        if (maidCarpetRequested) {
+          lineItems.push({
+            divisionId: 'maids',
+            divisionName: 'Mighty Maids Add-on',
+            title: 'Carpet Cleaning (+R135)',
+            description: 'Fiber deep spot treatment, shampoo extraction and conditioning',
+            unitPriceZAR: 135,
+            quantity: 1,
+            totalZAR: 135,
+          });
+          specialInclusions.push('Add-on: Carpet cleaning (+R135).');
+        }
+
+        if (maidWindowRequested) {
+          lineItems.push({
+            divisionId: 'maids',
+            divisionName: 'Mighty Maids Add-on',
+            title: 'Window Cleaning (+R120)',
+            description: 'Interior and accessible exterior streak-free glass polishing and sills wipe',
+            unitPriceZAR: 120,
+            quantity: 1,
+            totalZAR: 120,
+          });
+          specialInclusions.push('Add-on: Window cleaning (+R120).');
+        }
+
+        if (maidOvenRequested) {
+          lineItems.push({
+            divisionId: 'maids',
+            divisionName: 'Mighty Maids Add-on',
+            title: 'Oven Cleaning (+R100)',
+            description: 'Heavy grease degreasing, baked-on grime removal and rack clean',
+            unitPriceZAR: 100,
+            quantity: 1,
+            totalZAR: 100,
+          });
+          specialInclusions.push('Add-on: Oven cleaning (+R100).');
         }
       } else if (id === 'movers') {
         lineItems.push({
@@ -382,27 +467,27 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         lineItems.push({
           divisionId: 'gardeners',
           divisionName: div.name,
-          title: 'Mighty Gardeners Regular Round',
-          description: 'Basic regular garden maintenance: lawn mowing, trimming, edging, weeding and general tidying on a regular round for homes',
-          unitPriceZAR: 280,
-          quantity: 2,
-          totalZAR: 560,
+          title: 'Mighty Gardeners (Workload & Tasks Care)',
+          description: 'Quoted strictly by garden size & tasks to be done: lawn mowing, edging, weeding, bed maintenance, or one-off cleanup',
+          unitPriceZAR: 450,
+          quantity: 1,
+          totalZAR: 450,
         });
         specialInclusions.push(
-          'Regular garden round: lawn mowing, trimming, edging, weeding and general tidying'
+          'Garden care quoted by workload & tasks: lawn mowing, edging, weeding, pruning & cleanups'
         );
       } else if (id === 'plumbing') {
         lineItems.push({
           divisionId: 'plumbing',
           divisionName: div.name,
-          title: 'Mighty Plumbing Monthly Maintenance Round',
-          description: 'Bathroom and sink leak detection sweeps, preventative pipe cleaning & fixture tuning',
+          title: 'Mighty Plumbers Practical Solutions',
+          description: 'Leak detection, blocked drains, tap/toilet repairs, or fixture installation. Clear assessment & agreed quote (callout@mightyplumbers.co.za · 066 322 7557)',
           unitPriceZAR: 480,
           quantity: 1,
           totalZAR: 480,
         });
         specialInclusions.push(
-          'Monthly plumbing maintenance: bathroom & sink leak detection + clean pipes'
+          'Practical plumbing: leak detection, blocked drains, tap/toilet repairs & installations'
         );
       } else if (id === 'nannies') {
         lineItems.push({
@@ -595,9 +680,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                         : div.id === 'maids'
                         ? 'Cape Town Subscriptions'
                         : div.id === 'plumbing'
-                        ? 'Monthly Leak Sweeps'
+                        ? 'Practical Plumbing Solutions'
                         : div.id === 'gardeners'
-                        ? 'Regular Round & Mowing'
+                        ? 'Workload & Task-Based'
                         : div.brandKicker}
                     </span>
                   </button>
