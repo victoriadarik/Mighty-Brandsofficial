@@ -1,0 +1,6 @@
+{
+  "name": "Mighty Brands - Essential Home & Family Services",
+  "description": "Unified home of Mighty Maids, Mighty Nannies, Mighty Movers, Mighty Plumbing Services, and Mighty Gardeners Landscaping.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
